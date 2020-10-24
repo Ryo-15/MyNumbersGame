@@ -10,7 +10,13 @@
     getEL() {
       return this.el;
     }
+
+    activate(num) {
+      this.el.classList.remove('pressed');
+      this.el.textContent = num;
+    }
   }
+
   class Board {
     constructor() {
       this.panels = [];
@@ -27,7 +33,18 @@
         board.appendChild(panel.getEL());
       });
     }
+
+    activate() {
+      this.panels.forEach(panel => {
+        panel.activate(0);
+      });
+    }
   }
 
   const board = new Board();
+
+  const btn = document.getElementById('btn');
+  btn.addEventListener('click', () => {
+    board.activate();
+  });
 }
