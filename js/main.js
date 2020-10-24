@@ -116,7 +116,7 @@
     }
 
     getLevel() {
-      return.this.level;
+      return this.level;
     }
   }
 
