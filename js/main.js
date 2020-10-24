@@ -58,33 +58,46 @@
     }
   }
 
-  function runTimer() {
-    const timer = document.getElementById('timer');
-    timer.textContent = ((Date.now() - startTime) / 1000).toFixed(2);
 
-    timeoutId = setTimeout(() => {
-      runTimer();
-    }, 10)
-  }
+  class Game {
+    constructor() {
+      this.board = new Board();
 
-  const board = new Board();
+      this.currentNum = undefined;
+      this.startTime = undefined;
+      this.timeoutId = undefined;
 
-  let currentNum;
-  let startTime;
-  let timeoutId;
-
-  const btn = document.getElementById('btn');
-  btn.addEventListener('click', () => {
-    // ボタン一度しか押せないように
-    if (typeof timeoutId !== 'undefined') {
-      clearTimeout(timeoutId);
+      const btn = document.getElementById('btn');
+      btn.addEventListener('click', () => {
+        this.start();
+      });
     }
 
-    // スタート時に0からしか押せないようにする
-    currentNum = 0;
-    board.activate();
+    start() {
+      // ボタン一度しか押せないように
+      if (typeof this.timeoutId !== 'undefined') {
+        clearTimeout(this.timeoutId);
+      }
 
-    startTime = Date.now();
-    runTimer();
-  });
+      // スタート時に0からしか押せないようにする
+      this.currentNum = 0;
+      this.board.activate();
+
+      this.startTime = Date.now();
+      this.runTimer();
+    }
+
+    // 経過秒数カウント
+    runTimer() {
+      const timer = document.getElementById('timer');
+      timer.textContent = ((Date.now() - this.startTime) / 1000).toFixed(2);
+
+      this.timeoutId = setTimeout(() => {
+        this.runTimer();
+      }, 10)
+    }
+  }
+
+  // 新規ゲーム
+  new Game();
 }
