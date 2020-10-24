@@ -25,7 +25,7 @@
         this.el.classList.add('pressed');
         this.game.addCurrentNum();
 
-        if (this.game.getCurrentNum() === 4) {
+        if (this.game.getCurrentNum() === this.game.getLevel() ** 2) {
           clearTimeout(this.game.getTimeoutId());
         }
       }
@@ -36,7 +36,7 @@
     constructor(game) {
       this.game = game;
       this.panels = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < this.game.getLevel() ** 2; i++) {
         this.panels.push(new Panel(this.game));
       }
       this.setup();
@@ -51,7 +51,10 @@
     }
 
     activate() {
-      const nums = [0, 1, 2, 3];
+      const nums = [];
+      for (let i = 0; i < this.game.getLevel() ** 2; i++) {
+        nums.push(i);
+      }
 
       this.panels.forEach(panel => {
         const num = nums.splice(Math.floor(Math.random() * nums.length), 1)[0];
@@ -62,7 +65,8 @@
 
 
   class Game {
-    constructor() {
+    constructor(level) {
+      this.level = level;
       this.board = new Board(this);
 
       this.currentNum = undefined;
@@ -110,8 +114,12 @@
     getTimeoutId() {
       return this.timeoutId;
     }
+
+    getLevel() {
+      return.this.level;
+    }
   }
 
-  // 新規ゲーム
-  new Game();
+  // 新規ゲーム(マスの数)
+  new Game(2);
 }
