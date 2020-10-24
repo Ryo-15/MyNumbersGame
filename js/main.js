@@ -69,12 +69,19 @@
 
   const board = new Board();
 
-  let currentNum = 0;
+  let currentNum;
   let startTime;
   let timeoutId;
 
   const btn = document.getElementById('btn');
   btn.addEventListener('click', () => {
+    // ボタン一度しか押せないように
+    if (typeof timeoutId !== 'undefined') {
+      clearTimeout(timeoutId);
+    }
+
+    // スタート時に0からしか押せないようにする
+    currentNum = 0;
     board.activate();
 
     startTime = Date.now();
