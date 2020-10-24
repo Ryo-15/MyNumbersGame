@@ -5,6 +5,9 @@
     constructor() {
       this.el = document.createElement('li');
       this.el.classList.add('pressed');
+      this.el.addEventListener('click', () => {
+        this.check()
+      });
     }
 
     getEL() {
@@ -14,6 +17,13 @@
     activate(num) {
       this.el.classList.remove('pressed');
       this.el.textContent = num;
+    }
+
+    check() {
+      if (currentNum === parseInt(this.el.textContent, 10)) {
+        this.el.classList.add('pressed');
+        currentNum++;
+      }
     }
   }
 
@@ -45,6 +55,8 @@
   }
 
   const board = new Board();
+
+  let currentNum = 0;
 
   const btn = document.getElementById('btn');
   btn.addEventListener('click', () => {
